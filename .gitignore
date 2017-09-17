@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs
+/Space Invaders/x64
+/Space Invaders/LaserLauncher.cpp.PVS-Studio.compilerVersion.cmd
+/x64
