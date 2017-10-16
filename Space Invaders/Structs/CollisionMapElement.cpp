@@ -6,7 +6,7 @@ CCollisionMapElement::CCollisionMapElement() :
 {
 }
 
-bool CCollisionMapElement::Occupy(IBaseObject * Member)
+bool CCollisionMapElement::Occupy(const IBaseObject * Member)
 {
   if (m_IsOccupied)
     return false;

@@ -2,6 +2,7 @@
 #include "../Objects/Ships/PlayerShip.h"
 #include "../Objects/Ships/EnemyShip.h"
 #include "../Game.h"
+#include "../Objects/Bullets/Laser.h"
 
 CShipManager::CShipManager() :
   m_PlayerShip(nullptr),
@@ -27,19 +28,29 @@ void CShipManager::StopAllShips() const
     ship->DisableCruiseControl();
 }
 
-void CShipManager::OnShipDestruction(IBaseShip * Ship)
+void CShipManager::OnShipKilling(const IBaseShip * Ship, const IBaseObject * killer)
 {
   if (Ship == m_PlayerShip)
-  {
     PlayerProfile.ReduceLife();
-    TrySpawnPlayerShip();
-  }
   else
   {
-    //enemy crashed in rock and player get points for that?
-    PlayerProfile.AddScore(15);//hack! here should be get price from ship!
-    TrySpawnEnemyShip();
+    if (killer == m_PlayerShip)
+      PlayerProfile.AddScore(15);//killed by ram, "Yippee-kai-yay, motherfucker!"
+    else
+    {
+      auto Laser = dynamic_cast<const CLaser *>(killer);//here should be base weapon, not laser
+      if (Laser && Laser->GetOwner() == m_PlayerShip)
+        PlayerProfile.AddScore(15);//we should take value from player profile
+    }
   }
+}
+
+  void CShipManager::OnShipDestruction(const IBaseShip * Ship)
+{
+  if (Ship == m_PlayerShip)
+    TrySpawnPlayerShip();
+  else
+    TrySpawnEnemyShip();
 
   auto it = std::find(m_AllShips.begin(), m_AllShips.end(), Ship);
   if (it != m_AllShips.end())

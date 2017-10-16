@@ -17,7 +17,7 @@ CEnemyShip::CEnemyShip() :
     SetPosition(CVector2i((rand() % 10) + (((int)Rect.height / 2) - 5 - 3), Rect.pos.y + (int)Rect.width));//Hack! 20 and 10 should be calculated from possible rock height
   } while (!CollisionManager.CanBePlaced(this));
 
-  m_Weapon = new CLaserLauncher(MOVE_LEFT);
+  m_Weapon = new CLaserLauncher(this, CVector2i(1, -1), MOVE_LEFT);
 
   m_State = SPAWNING;
   SetMortality(false);
@@ -57,7 +57,7 @@ void CEnemyShip::Update(double time)
     break; 
   }
   case FIRING:
-    m_Weapon->TryFire(time, GetBounds().pos - CVector2i(1, 5));
+    m_Weapon->TryFire(time);
     m_FireIntervaleInUpdates = 0;
     RandomizeMoveVector();
     m_State = FLYING;

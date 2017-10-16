@@ -1,16 +1,17 @@
 #pragma once
 #include "BaseWeapon.h"
-#include "../Objects/Bullets/Laser.h"
+#include "../Objects/Ships/BaseShip.h"
 
 class CLaserLauncher :
   public IBaseWeapon
 {
 public:
-  CLaserLauncher(EMoveDirection Direction);
+  CLaserLauncher(IBaseShip * owner, CVector2i bulletOffset, EMoveDirection fireDirection);
+
+protected:
+  void Fire() override;
 
 private:
-  void Fire(CVector2i Position) override;
-
-  EMoveDirection m_Direction;
+  IBaseShip * m_Owner;
 };
 

@@ -11,7 +11,7 @@ struct CollisionMap
   //if collision happen return pointer to object with which a collision occurred and 
   //delete both objects from map
   //if collision not happen returned value is nullptr
-  const IBaseObject * AddMember(IBaseObject * NewMember);
+  const IBaseObject * AddMember(const IBaseObject * NewMember);
 
   void CleanFrom(const IBaseObject * Member);
 

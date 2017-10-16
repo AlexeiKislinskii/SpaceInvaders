@@ -10,7 +10,7 @@ class IBaseObject :
 {
 public:
   IBaseObject(EUpdateSpeed UpdateSpeed, bool IsMoveable);
-  virtual ~IBaseObject() {};
+  virtual ~IBaseObject();
 
   const std::vector<std::string> & GetTexture() const;
   
@@ -21,6 +21,8 @@ public:
 
   void SetIsOnScreen(bool state);
   bool IsOnScreen() const;
+
+  virtual void Kill(const IBaseObject * killer) const;
 
 protected:
   void SetTexture(std::vector<std::string> Texture);

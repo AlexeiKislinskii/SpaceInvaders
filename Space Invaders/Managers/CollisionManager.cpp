@@ -17,7 +17,7 @@ void CCollisionEngine::Update(double time)
 
   for (auto it = Objects.begin(); it != Objects.end();)
   {
-    IBaseObject * obj = *it;
+    const IBaseObject * obj = *it;
 
     if (!obj->IsOnScreen())
     {
@@ -31,6 +31,11 @@ void CCollisionEngine::Update(double time)
     auto object = Map.AddMember(obj);
     if (object)
     {
+      if (obj->IsMortal())
+        obj->Kill(object);
+      if (object->IsMortal())
+        object->Kill(obj);
+
       if (obj->IsMortal())
       {
         Map.CleanFrom(obj);

@@ -6,13 +6,14 @@ class CLaser :
   public IBaseObject
 {
 public:
-  CLaser(CVector2i StartPosition, EMoveDirection Direction);
+  CLaser(const IBaseObject * Owner, CVector2i StartPosition, EMoveDirection Direction);
 
+  const IBaseObject * GetOwner() const;
 protected:
   void Update(double time) override;
 
 private:
-  IBaseObject * m_Laser;
+  const IBaseObject * m_Owner;
   CVector2i m_MoveVector;
 };
 

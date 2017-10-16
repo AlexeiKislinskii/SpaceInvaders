@@ -12,7 +12,8 @@ public:
 
   void StopAllShips() const;
 
-  void OnShipDestruction(IBaseShip * Ship);
+  void OnShipKilling(const IBaseShip * Ship, const IBaseObject * killer);
+  void OnShipDestruction(const IBaseShip * Ship);
 
 private:
   void TrySpawnPlayerShip();

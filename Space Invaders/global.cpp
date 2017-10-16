@@ -6,7 +6,7 @@
 void main()
 {
 #ifdef NDEBUG
-  srand(time((time_t)0));
+  srand((unsigned int)time((time_t)0));
 #endif // NDEBUG
 
   CGame::CreateInstance();

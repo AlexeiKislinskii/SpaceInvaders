@@ -11,6 +11,12 @@ IBaseObject::IBaseObject(EUpdateSpeed UpdateSpeed, bool IsMoveable) :
   m_IsOnScreen(true),//hack!should be default false and then logic in setPosition
   m_IsMoveable(IsMoveable)
 {
+  // Empty
+}
+
+IBaseObject::~IBaseObject()
+{
+  // Empty
 }
 
 const std::vector<std::string> & IBaseObject::GetTexture() const
@@ -99,5 +105,10 @@ void IBaseObject::SetIsOnScreen(bool state)
 bool IBaseObject::IsOnScreen() const
 {
   return m_IsOnScreen;
+}
+
+void IBaseObject::Kill(const IBaseObject * killer) const
+{
+  // Empty
 }
 

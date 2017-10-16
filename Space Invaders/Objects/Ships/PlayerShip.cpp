@@ -14,8 +14,9 @@ CPlayerShip::CPlayerShip() :
   Texture.push_back("\\-   ");
   SetTexture(Texture);
   SetPosition(CVector2i(10, Renderer.GetScreenRect().pos.y));
-
-  m_Weapon = new CLaserLauncher(MOVE_RIGHT);
+  //mabe we should do like in enemy ship, place random and several times, and be immortal some time?
+  
+  m_Weapon = new CLaserLauncher(this, CVector2i(1, 5), MOVE_RIGHT);
 
 #ifdef _DEBUG
   SetMortality(false);
@@ -28,7 +29,7 @@ void CPlayerShip::Update(double time)
   Renderer.SetRenderPosition(GetBounds().pos.y - m_YAxisOffsetByUser);
 
   if (m_IsFireFromUser)
-    m_Weapon->TryFire(time, GetBounds().pos + CVector2i(1, 5));
+    m_Weapon->TryFire(time);
 
   if (TryMove(m_MoveFromUser))
   {

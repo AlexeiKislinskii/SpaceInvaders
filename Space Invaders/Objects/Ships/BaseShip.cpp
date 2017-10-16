@@ -27,6 +27,11 @@ void IBaseShip::DisableCruiseControl()
   m_IsCruiseControleEnebled = false;
 }
 
+void IBaseShip::Kill(const IBaseObject * killer) const
+{
+  ShipManager.OnShipKilling(this, killer);
+}
+
 bool IBaseShip::TryMove(const CVector2i & moveVector, bool force)
 {
   if (moveVector.x == 0 && moveVector.y == 0)

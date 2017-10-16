@@ -17,7 +17,7 @@ CollisionMap::~CollisionMap()
   delete[] m_Map;
 }
 
-const IBaseObject * CollisionMap::AddMember(IBaseObject * NewMember)
+const IBaseObject * CollisionMap::AddMember(const IBaseObject * NewMember)
 {
   const IBaseObject * Output = nullptr;
   auto Pos = NewMember->GetBounds().pos;

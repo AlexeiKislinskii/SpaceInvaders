@@ -1,17 +1,24 @@
 #include "BaseWeapon.h"
 
-IBaseWeapon::IBaseWeapon(double FireIntervale) :
+IBaseWeapon::IBaseWeapon(CVector2i bulletOffset, EMoveDirection direction, double fireIntervale) :
+  m_BulletOffset(bulletOffset),
+  m_Direction(direction),
   m_LastFireTime(0)
 {
-  m_FireInterval = FireIntervale;
+  m_FireInterval = fireIntervale;
 }
 
-void IBaseWeapon::TryFire(double Time, CVector2i Position)
+IBaseWeapon::~IBaseWeapon()
+{
+  // Empty 
+}
+
+void IBaseWeapon::TryFire(double Time)
 {
   if (Time - m_LastFireTime < m_FireInterval)
     return;
 
   m_LastFireTime = Time;
 
-  Fire(Position);
+  Fire();
 }

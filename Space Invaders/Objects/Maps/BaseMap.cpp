@@ -33,6 +33,7 @@ void CBaseMap::AddObject(IBaseObject * object)
 
 std::list<IBaseObject *>::const_iterator CBaseMap::DeleteObject(const IBaseObject * object)
 {
+  //at momment of comment writing this find is excessive
   auto it = std::find(m_AllObjects.begin(), m_AllObjects.end(), object);
 
   if (it != m_AllObjects.end())
