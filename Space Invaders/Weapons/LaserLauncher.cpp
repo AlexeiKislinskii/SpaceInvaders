@@ -3,7 +3,7 @@
 #include "../Objects/Bullets/Laser.h"
 
 CLaserLauncher::CLaserLauncher(IBaseShip * owner, CVector2i bulletOffset, EMoveDirection Direction) :
-  IBaseWeapon(bulletOffset, Direction, 0.0),
+  IBaseWeapon(bulletOffset, Direction, 0.5),
   m_Owner(owner)
 {
   // Empty
