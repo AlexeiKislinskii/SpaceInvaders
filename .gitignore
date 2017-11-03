@@ -2,7 +2,4 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs
-/Space Invaders/x64
-/Space Invaders/LaserLauncher.cpp.PVS-Studio.compilerVersion.cmd
-/x64
+/x64/Debug
