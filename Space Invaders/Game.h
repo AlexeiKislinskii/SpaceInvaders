@@ -1,13 +1,15 @@
 #pragma once
 #include "Enums\GameState.h"
-#include "InputHandler.h"
 #include "Interfaces\Singletone.h"
 #include "Managers\MapManager.h"
 #include "Managers\ShipManager.h"
 #include "Managers\CollisionManager.h"
 #include "Renderer.h"
 #include "PlayerProfiler.h"
+#include "Menu/GameMenu.h"
+#include "Enums/Input.h"
 
+#define Game CGame::GetInstance()
 #define MapManager CGame::GetInstance().GetMapManager()
 #define ShipManager CGame::GetInstance().GetShipManager()
 #define Renderer CGame::GetInstance().GetRenderer()
@@ -31,15 +33,18 @@ public:
   CPlayerProfiler & GetPlayerProfile() const { return *m_PlayerProfile; };
   CCollisionEngine & GetCollisionManager() const { return *m_CollisionEngine; };
 
-  void SetPause();
-
 private:
+  void InputHandler(EInput input, bool isPressed);
+  void MenuCallback(int index);
+
+  CGameMenu * m_MainMenu;
+
   CMapManager * m_MapManager;
   CShipManager * m_ShipManager;
   CRenderer * m_Render;
   CCollisionEngine * m_CollisionEngine;
   CPlayerProfiler * m_PlayerProfile;
 
-  bool m_IsUserRequestPause;
+  EGameState m_GameState;
 };
 

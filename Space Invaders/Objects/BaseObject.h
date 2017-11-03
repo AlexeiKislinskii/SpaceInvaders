@@ -3,7 +3,7 @@
 #include <list>
 #include "../Structs/Rectangular.h"
 #include "../Structs/Vector.h"
-#include "../../Interfaces/Updateable.h"
+#include "../Interfaces/Updateable.h"
 
 class IBaseObject : 
   public IUpdateable

@@ -18,6 +18,8 @@ CPlayerShip::CPlayerShip() :
   
   m_Weapon = new CLaserLauncher(this, CVector2i(1, 5), MOVE_RIGHT);
 
+  CInputHandler::GetInstance().Signal.Connect(this, &CPlayerShip::InputHandler);
+
 #ifdef _DEBUG
   SetMortality(false);
 #endif // _DEBUG
@@ -52,7 +54,28 @@ void CPlayerShip::AddMove(const CVector2i & move)
     m_MoveFromUser.y += move.y;
 }
 
-void CPlayerShip::ChangeFireState(bool state)
+void CPlayerShip::InputHandler(EInput input, bool isPressed)
 {
-  m_IsFireFromUser = state;
+  switch (input)
+  {
+  case INPUT_A:
+  case INPUT_LEFT:
+    AddMove(CVector2i(0, isPressed ? -1 : 1));
+    break;
+  case INPUT_D:
+  case INPUT_RIGHT:
+    AddMove(CVector2i(0, isPressed ? 1 : -1));
+    break;
+  case INPUT_W:
+  case INPUT_UP:
+    AddMove(CVector2i(isPressed ? -1 : 1, 0));
+    break;
+  case INPUT_S:
+  case INPUT_DOWN:
+    AddMove(CVector2i(isPressed ? 1 : -1, 0));
+    break;
+  case INPUT_SPACE:
+    m_IsFireFromUser = isPressed;
+    break;
+  }
 }

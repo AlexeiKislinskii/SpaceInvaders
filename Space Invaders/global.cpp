@@ -19,9 +19,9 @@ void main()
   QueryPerformanceFrequency(&freq);
 
   freq.QuadPart /= 2;//hack!, because i know that my cpu has 2 cores
-  auto t = CInputHandler::GetInstance();
-  EGameState result = PLAYING;
-  while (result == PLAYING)
+
+  EGameState result = PAUSED_BY_USER;
+  while (result != EXIT)
   {
     QueryPerformanceCounter(&time);
     CInputHandler::GetInstance().Update();

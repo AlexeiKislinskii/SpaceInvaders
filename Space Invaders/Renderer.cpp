@@ -106,6 +106,20 @@ void CRenderer::SetRenderPosition(int Position)
   m_CameraYPosition = Position;
 }
 
+void CRenderer::Clear()
+{
+  for (size_t i = 0; i < m_ScreenHeight; i++)
+    for (size_t j = 0; j < m_ScreenWidth; j++)
+    {
+      SetConsoleCursorPosition(m_ConsoleHandle, COORD{ (short)j, (short)i });
+
+      std::cout << ' ';
+    }
+
+  for (auto str : m_LastRenderMap)
+    str.clear();
+}
+
 void Pro(size_t from, size_t to)
 {}
 

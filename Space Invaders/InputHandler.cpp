@@ -33,35 +33,38 @@ void CInputHandler::Update()
     {
       if (m_Event[i].EventType == KEY_EVENT)
       {
+        bool isPressed = m_Event[i].Event.KeyEvent.bKeyDown == 0 ? false : true;
         switch (m_Event[i].Event.KeyEvent.wVirtualKeyCode)
         {
         case 65://A
+          Signal.Emit(INPUT_A, isPressed);
+          break;
         case 37://left arrow
-          ShipManager.GetPlayerShip().AddMove(
-            CVector2i(0, m_Event[i].Event.KeyEvent.bKeyDown ? -1 : 1));
+          Signal.Emit(INPUT_LEFT, isPressed);
           break;
         case 68://D
+          Signal.Emit(INPUT_D, isPressed);
+          break;
         case 39://right arrow
-          ShipManager.GetPlayerShip().AddMove(
-            CVector2i(0, m_Event[i].Event.KeyEvent.bKeyDown ? 1 : -1));
+          Signal.Emit(INPUT_RIGHT, isPressed);
           break;
         case 87://W
+          Signal.Emit(INPUT_W, isPressed);
+          break;
         case 38://up arrow
-          ShipManager.GetPlayerShip().AddMove(
-            CVector2i(m_Event[i].Event.KeyEvent.bKeyDown ? -1 : 1, 0));
+          Signal.Emit(INPUT_UP, isPressed);
           break;
         case 83://S
+          Signal.Emit(INPUT_S, isPressed);
+          break;
         case 40://down arrow
-          ShipManager.GetPlayerShip().AddMove(
-            CVector2i(m_Event[i].Event.KeyEvent.bKeyDown ? 1 : -1, 0));
+          Signal.Emit(INPUT_DOWN, isPressed);
           break;
         case 32://space
-          ShipManager.GetPlayerShip().ChangeFireState(
-            m_Event[i].Event.KeyEvent.bKeyDown ? true : false);
+          Signal.Emit(INPUT_SPACE, isPressed);
           break;
         case 27://escape
-          if(!m_Event[i].Event.KeyEvent.bKeyDown)
-            CGame::GetInstance().SetPause();
+          Signal.Emit(INPUT_ESC, isPressed);
           break;
         }
       }

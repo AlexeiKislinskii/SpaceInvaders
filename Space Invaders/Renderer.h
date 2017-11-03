@@ -2,7 +2,6 @@
 #include "Objects\BaseObject.h"
 #include "Interfaces\Updateable.h"
 
-static const int SCREEN_Y_OFFSET = -5;//temporary shit
 class CRenderer : 
   public IUpdateable
 {
@@ -15,6 +14,8 @@ public:
   const CRect GetScreenRect() const;
 
   void SetRenderPosition(int Position);
+
+  void Clear();
 
 protected:
   void Update(double time) override;

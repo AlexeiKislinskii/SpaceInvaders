@@ -10,13 +10,13 @@ public:
 
   int GetPositionForCamera() const;
 
-  void AddMove(const CVector2i & move);
-  void ChangeFireState(bool state);
-
 protected:
   void Update(double time) override;
 
 private:
+  void AddMove(const CVector2i & move);
+  void InputHandler(EInput input, bool isPressed);
+
   int m_YAxisOffsetByUser;
 
   CVector2i m_MoveFromUser;

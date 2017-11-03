@@ -1,24 +1,39 @@
 #pragma once
 #include <functional>
-#include <vector>
+#include <map>
 
 template <typename... Args>
 class CSignal
 {
 public:
-  // connects a member function to this Signal
+  CSignal() : current_id(0) {}
+
   template <typename T>
-  void connect_member(T *inst, void (T::*func)(Args...))
+  static std::function<void(Args...)> MakeDelegate(T *inst, void (T::*func)(Args...))
   {
-    m_slots.push_back([=](Args... args) { (inst->*func)(args...); });
+    return [=](Args... args) { (inst->*func)(args...); };
+  }
+
+  // connects a member function to this Signal return index for further deleting
+  template <typename T>
+  int Connect(T *inst, void (T::*func)(Args...))
+  {
+    m_slots.insert(std::make_pair(++current_id, MakeDelegate(inst, func)));
+    return current_id;
+  }
+
+  void Disconnect(const int index)
+  {
+    m_slots.erase(index);
   }
 
   // calls all connected functions
-  void emit(Args... p)
+  void Emit(Args... p)
   {
-    for (auto it : m_slots) it(p...);
+    for (auto it : m_slots) it.second(p...);
   }
 
 private:
-  std::vector<std::function<void(Args...)>> m_slots;
+  int current_id;
+  std::map<int, std::function<void(Args...)>> m_slots;
 };
