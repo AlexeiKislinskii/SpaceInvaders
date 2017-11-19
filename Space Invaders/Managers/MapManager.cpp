@@ -7,8 +7,7 @@ CMapManager::CMapManager() :
 
 CMapManager::~CMapManager()
 {
-  if (m_CurrentMap)
-    delete m_CurrentMap;
+  delete m_CurrentMap;
 }
 
 void CMapManager::Init()

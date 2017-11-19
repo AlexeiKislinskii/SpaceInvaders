@@ -77,5 +77,7 @@ void CPlayerShip::InputHandler(EInput input, bool isPressed)
   case INPUT_SPACE:
     m_IsFireFromUser = isPressed;
     break;
+  default:
+    break;
   }
 }

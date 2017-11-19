@@ -7,22 +7,30 @@
 #define WHITEONBLACKTEXT BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_GREEN
 #define BLACKONWHITETEXT FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN
 
-CGameMenu::CGameMenu() : 
+CGameMenu::CGameMenu() :
   m_Handle(GetStdHandle(STD_OUTPUT_HANDLE)),
-  m_IndexInInputHandler(-1)
+  m_InputSignalIndex(-1),
+  m_Index(-1)
 {
   // Empty
 }
 
-void CGameMenu::Init(std::vector<std::string> items, int startIndex)
+void CGameMenu::Show(MenuList & items, int startIndex)
 {
-  m_Items = items;
+  m_Items = std::move(items);
   m_Index = startIndex;
+  m_InputSignalIndex = CInputHandler::GetInstance().Signal.Connect(this, &CGameMenu::InputHandle);
+}
+
+void CGameMenu::Hide()
+{
+  m_Items.clear();
+  CInputHandler::GetInstance().Signal.Disconnect(m_InputSignalIndex);
 }
 
 void CGameMenu::InputHandle(EInput input, bool isPressed)
 {
-  if (!isPressed)
+  if (!isPressed && !m_Items.empty())
   {
     switch (input)
     {
@@ -35,25 +43,10 @@ void CGameMenu::InputHandle(EInput input, bool isPressed)
       m_Index = m_Index < m_Items.size() - 1 ? m_Index + 1 : 0;
       break;
     case INPUT_SPACE:
-      m_ChooseCallback(m_Index);
-      break;
-    case INPUT_ESC:
-      m_ChooseCallback(-1);
+      m_Items[m_Index].second();
       break;
     }
   }
-}
-
-void CGameMenu::Enable(std::function<void(int)> callback)
-{
-  m_ChooseCallback = callback;
-  m_IndexInInputHandler = CInputHandler::GetInstance().Signal.Connect(this, &CGameMenu::InputHandle);
-}
-
-void CGameMenu::Disable()
-{
-  m_ChooseCallback = nullptr;
-  CInputHandler::GetInstance().Signal.Disconnect(m_IndexInInputHandler);
 }
 
 void CGameMenu::Update()
@@ -67,8 +60,8 @@ void CGameMenu::Update()
   for (int i = 0; i < m_Items.size(); i++)
   {
     SetConsoleTextAttribute(m_Handle, i == m_Index ? WHITEONBLACKTEXT : BLACKONWHITETEXT);
-    SHORT startPos = (SHORT)(HorizontalMiddle - (m_Items[i].size() / 2));
+    SHORT startPos = (SHORT)(HorizontalMiddle - (m_Items[i].first.size() / 2));
     SetConsoleCursorPosition(m_Handle, COORD{ startPos, (SHORT)(VerticalStartPos + i) });
-    std::cout << m_Items[i];
+    std::cout << m_Items[i].first;
   }
 }

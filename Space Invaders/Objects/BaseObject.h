@@ -25,7 +25,7 @@ public:
   virtual void Kill(const IBaseObject * killer) const;
 
 protected:
-  void SetTexture(std::vector<std::string> Texture);
+  void SetTexture(std::vector<std::string> & Texture);
   void SetPosition(CVector2i Position);
   void SetMortality(bool value);
 

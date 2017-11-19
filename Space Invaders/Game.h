@@ -35,7 +35,10 @@ public:
 
 private:
   void InputHandler(EInput input, bool isPressed);
-  void MenuCallback(int index);
+  void StartNewGame();
+  void LoadGame();
+  void ContinueGame();
+  void ExitGame();
 
   CGameMenu * m_MainMenu;
 

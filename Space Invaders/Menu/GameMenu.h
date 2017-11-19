@@ -3,26 +3,25 @@
 #include <string>
 
 #include "../InputHandler.h"
+#include "../Enums/GameState.h"
+
+typedef std::vector<std::pair<std::string, std::function<void(void)>>> MenuList;
 
 class CGameMenu
 {
 public:
   CGameMenu();
 
-  void Init(std::vector<std::string> items, int startIndex);
-
-  void Enable(std::function<void(int)> callback);
-  void Disable();
-
+  void Show(MenuList & items, int startIndex);
+  void Hide();
 
   void Update();
 private:
   void InputHandle(EInput input, bool isPressed);
 
-  const HANDLE             m_Handle;
-  std::vector<std::string> m_Items;
-  int                      m_Index;
-  int                   m_IndexInInputHandler;
-  std::function<void(int)> m_ChooseCallback;
+  const HANDLE m_Handle;
+  int          m_InputSignalIndex;
+  MenuList     m_Items;
+  int          m_Index;
 };
 

@@ -13,7 +13,7 @@ IBaseShip::~IBaseShip()
 {
   ShipManager.OnShipDestruction(this);
 
-  if (m_Weapon) delete m_Weapon;
+  delete m_Weapon;
 }
 
 void IBaseShip::Update(double time)

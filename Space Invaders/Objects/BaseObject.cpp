@@ -44,9 +44,9 @@ bool IBaseObject::IsMoveable() const
   return m_IsMoveable;
 }
 
-void IBaseObject::SetTexture(std::vector<std::string> Texture)
+void IBaseObject::SetTexture(std::vector<std::string> & Texture)
 {
-  m_Texture = Texture;
+  m_Texture = std::move(Texture);
   CalculateEdges();
 }
 

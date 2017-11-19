@@ -116,12 +116,10 @@ void CRenderer::Clear()
       std::cout << ' ';
     }
 
-  for (auto str : m_LastRenderMap)
-    str.clear();
+  for (auto & str : m_LastRenderMap)
+    for (auto & symbol : str)
+      symbol = ' ';
 }
-
-void Pro(size_t from, size_t to)
-{}
 
 void CRenderer::Output()
 {
