@@ -12,8 +12,6 @@ public:
 
   void DisableCruiseControl();
 
-  void Kill(const IBaseObject * killer) const override;
-
 protected:
   void Update(double time);
 

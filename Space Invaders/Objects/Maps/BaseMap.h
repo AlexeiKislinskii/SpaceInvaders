@@ -14,7 +14,6 @@ public:
   void Update(double time);
 
   void AddObject(IBaseObject * object);
-  std::list<IBaseObject *>::const_iterator DeleteObject(const IBaseObject * object);
 
   const std::list<IBaseObject *> & GetAllObjects() const;
 

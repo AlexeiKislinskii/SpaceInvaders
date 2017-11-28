@@ -15,40 +15,20 @@ void CCollisionEngine::Update(double time)
 
   CollisionMap Map(rect.pos.y, rect.height, rect.width);
 
-  for (auto it = Objects.begin(); it != Objects.end();)
+  for (auto obj : Objects)
   {
-    const IBaseObject * obj = *it;
-
     if (!obj->IsOnScreen())
     {
-      if (obj->IsMoveable() && obj->IsMortal())
-        it = CurrentMap.DeleteObject(*it);
-      else
-        it++;
+      obj->Kill(nullptr);
       continue;
     }
 
     auto object = Map.AddMember(obj);
     if (object)
     {
-      if (obj->IsMortal())
-        obj->Kill(object);
-      if (object->IsMortal())
-        object->Kill(obj);
-
-      if (obj->IsMortal())
-      {
-        Map.CleanFrom(obj);
-        it = CurrentMap.DeleteObject(obj);
-      }
-      if (object->IsMortal())
-      {
-        Map.CleanFrom(object);
-        CurrentMap.DeleteObject(object);
-      }
+      obj->Kill(object);
+      object->Kill(obj);
     }
-
-    it++;
   }
 }
 

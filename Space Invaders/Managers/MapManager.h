@@ -8,6 +8,7 @@ public:
   ~CMapManager();
 
   void Init();
+  void Reset();
 
   void Update(double time);
 

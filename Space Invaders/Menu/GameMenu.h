@@ -22,6 +22,6 @@ private:
   const HANDLE m_Handle;
   int          m_InputSignalIndex;
   MenuList     m_Items;
-  int          m_Index;
+  size_t       m_Index;
 };
 

@@ -17,6 +17,12 @@ void CMapManager::Init()
   m_CurrentMap->Generate();
 }
 
+void CMapManager::Reset()
+{
+  if(m_CurrentMap) delete m_CurrentMap;
+  Init();
+}
+
 void CMapManager::Update(double time)
 {
   m_CurrentMap->Update(time);

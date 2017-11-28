@@ -1,26 +1,25 @@
 #pragma once
 #include "../Objects/Ships/PlayerShip.h"
 
-class CShipManager
+class CShipManager :
+  public IUpdateable
 {
 public:
   CShipManager();
 
   void Init();
 
-  CPlayerShip & GetPlayerShip() const;
+  const CPlayerShip * GetPlayerShip() const;
 
   void StopAllShips() const;
 
-  void OnShipKilling(const IBaseShip * Ship, const IBaseObject * killer);
-  void OnShipDestruction(const IBaseShip * Ship);
+protected:
+  void Update( double time ) override;
 
 private:
   void TrySpawnPlayerShip();
   void TrySpawnEnemyShip();
 
   CPlayerShip * m_PlayerShip;
-
-  std::vector<IBaseShip *> m_AllShips;
 };
 

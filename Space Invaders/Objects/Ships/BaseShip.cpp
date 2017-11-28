@@ -11,9 +11,7 @@ IBaseShip::IBaseShip(EMoveDirection direction) :
 
 IBaseShip::~IBaseShip()
 {
-  ShipManager.OnShipDestruction(this);
-
-  delete m_Weapon;
+  if(m_Weapon) delete m_Weapon;
 }
 
 void IBaseShip::Update(double time)
@@ -25,11 +23,6 @@ void IBaseShip::Update(double time)
 void IBaseShip::DisableCruiseControl()
 {
   m_IsCruiseControleEnebled = false;
-}
-
-void IBaseShip::Kill(const IBaseObject * killer) const
-{
-  ShipManager.OnShipKilling(this, killer);
 }
 
 bool IBaseShip::TryMove(const CVector2i & moveVector, bool force)

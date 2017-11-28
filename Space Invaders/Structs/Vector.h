@@ -20,7 +20,4 @@ struct CVector2i
   //Logical overload
   bool operator==(const CVector2i & Value);
   bool operator!=(const CVector2i & Value);
-
-  static double Distance(CVector2i First, CVector2i Second);
-  static double Distance(CVector2i First, double SecondX, double SecondY);
 };

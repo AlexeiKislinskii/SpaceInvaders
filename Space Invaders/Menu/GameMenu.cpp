@@ -57,7 +57,7 @@ void CGameMenu::Update()
   auto HorizontalMiddle = (CursorBufferInfo.srWindow.Right - CursorBufferInfo.srWindow.Left + 1) / 2;
   auto VerticalStartPos = ((CursorBufferInfo.srWindow.Bottom - CursorBufferInfo.srWindow.Top + 1) / 2) - (m_Items.size() / 2);
 
-  for (int i = 0; i < m_Items.size(); i++)
+  for (size_t i = 0; i < m_Items.size(); i++)
   {
     SetConsoleTextAttribute(m_Handle, i == m_Index ? WHITEONBLACKTEXT : BLACKONWHITETEXT);
     SHORT startPos = (SHORT)(HorizontalMiddle - (m_Items[i].first.size() / 2));

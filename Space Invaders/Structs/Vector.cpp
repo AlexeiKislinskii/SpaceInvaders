@@ -54,13 +54,3 @@ bool CVector2i::operator!=(const CVector2i & Value)
 {
   return x != Value.x || y != Value.y;
 }
-
-double CVector2i::Distance(CVector2i First, CVector2i Second)
-{
-  return sqrt(pow(Second.x - First.x, 2) + pow(Second.y - First.y, 2));
-}
-
-double CVector2i::Distance(CVector2i First, double SecondX, double SecondY)
-{
-  return sqrt(pow(SecondX - First.x, 2) + pow(SecondY - First.y, 2));
-}

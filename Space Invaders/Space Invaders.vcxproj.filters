@@ -84,6 +84,9 @@
     <ClCompile Include="Menu\GameMenu.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="Structs\Assert.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -174,6 +177,9 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="Enums\Input.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Structs\Assert.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,7 +12,7 @@ CollisionMap::CollisionMap(size_t start, size_t height, size_t width) :
 
 CollisionMap::~CollisionMap()
 {
-  for (int i = 0; i < m_Height; ++i)
+  for (size_t i = 0; i < m_Height; ++i)
     delete[] m_Map[i];
   delete[] m_Map;
 }
@@ -23,17 +23,17 @@ const IBaseObject * CollisionMap::AddMember(const IBaseObject * NewMember)
   auto Pos = NewMember->GetBounds().pos;
   auto Texture = NewMember->GetTexture();
 
-  for (int i = 0; i < Texture.size(); i++)
+  for (size_t i = 0; i < Texture.size(); i++)
   {
-    for (int j = 0; j < Texture[i].size(); j++)
+    for (size_t j = 0; j < Texture[i].size(); j++)
     {
       if (Texture[i][j] == ' ')
         continue;
 
       auto PointLocalCord = WorldToLocalPosition(CVector2i(Pos.x + i, Pos.y + j));
 
-      if (PointLocalCord.x < 0 || PointLocalCord.x >= m_Height || 
-          PointLocalCord.y < 0 || PointLocalCord.y >= m_Width)
+      if (PointLocalCord.x < 0 || PointLocalCord.x >= (int)m_Height || 
+          PointLocalCord.y < 0 || PointLocalCord.y >= (int)m_Width)
         continue;
 
       if (!m_Map[PointLocalCord.x][PointLocalCord.y].Occupy(NewMember))
@@ -49,17 +49,17 @@ void CollisionMap::CleanFrom(const IBaseObject * Member)
   auto Pos = Member->GetBounds().pos;
   auto Texture = Member->GetTexture();
 
-  for (int i = 0; i < Texture.size(); i++)
+  for (size_t i = 0; i < Texture.size(); i++)
   {
-    for (int j = 0; j < Texture[i].size(); j++)
+    for (size_t j = 0; j < Texture[i].size(); j++)
     {
       if (Texture[i][j] == ' ')
         continue;
 
       auto PointLocalCord = WorldToLocalPosition(CVector2i(Pos.x + i, Pos.y + j));
 
-      if (PointLocalCord.x < 0 || PointLocalCord.x >= m_Height ||
-          PointLocalCord.y < 0 || PointLocalCord.y >= m_Width)
+      if (PointLocalCord.x < 0 || PointLocalCord.x >= (int)m_Height ||
+          PointLocalCord.y < 0 || PointLocalCord.y >= (int)m_Width)
         continue;
 
       m_Map[PointLocalCord.x][PointLocalCord.y] = CCollisionMapElement();

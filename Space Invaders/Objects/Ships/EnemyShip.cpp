@@ -12,10 +12,13 @@ CEnemyShip::CEnemyShip() :
   SetTexture(Texture);
   auto Rect = Renderer.GetScreenRect();
 
+  int failCounter = 0;
   do
   {
     SetPosition(CVector2i((rand() % 10) + (((int)Rect.height / 2) - 5 - 3), Rect.pos.y + (int)Rect.width));//Hack! 20 and 10 should be calculated from possible rock height
-  } while (!CollisionManager.CanBePlaced(this));
+  } while (!CollisionManager.CanBePlaced(this) && failCounter++ > 10);
+
+  ASSERT(failCounter < 10, "Cannot generate enemy ship!");
 
   m_Weapon = new CLaserLauncher(this, CVector2i(1, -1), MOVE_LEFT);
 

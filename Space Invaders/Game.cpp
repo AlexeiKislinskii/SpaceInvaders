@@ -33,11 +33,6 @@ void CGame::Init()
   m_PlayerProfile = new CPlayerProfiler();
   m_MainMenu = new CGameMenu();
 
-  //Order is important!
-  m_MapManager->Init();
-  m_Render->Init();
-  m_ShipManager->Init();
-
   CInputHandler::GetInstance().Signal.Connect(this, &CGame::InputHandler);
 
   MenuList list;
@@ -50,10 +45,11 @@ void CGame::Init()
 EGameState CGame::Update(double time)
 {
   if (m_GameState == PLAYING)
-  {
-    m_Render->TryUpdate(time);
-    m_MapManager->Update(time);
+  {    
     m_CollisionEngine->TryUpdate(time);
+    m_ShipManager->TryUpdate(time);
+    m_MapManager->Update(time);
+    m_Render->TryUpdate(time);
   }
   else if(m_GameState == PAUSED_BY_USER)
   {
@@ -82,6 +78,8 @@ void CGame::StartNewGame()
   m_GameState = PLAYING;
   m_MainMenu->Hide();
   m_Render->Clear();
+  m_MapManager->Reset();
+  m_ShipManager->Init();
 }
 
 void CGame::LoadGame()

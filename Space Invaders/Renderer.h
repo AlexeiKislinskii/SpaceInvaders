@@ -8,12 +8,11 @@ class CRenderer :
 public:
   CRenderer();
 
-  void Init();
   void Add(IBaseObject & Object);
 
   const CRect GetScreenRect() const;
 
-  void SetRenderPosition(int Position);
+  void SetRenderPosition(int Position);// part of huge hack with Y render offset and ship cruise control
 
   void Clear();
 

@@ -9,7 +9,9 @@ IBaseObject::IBaseObject(EUpdateSpeed UpdateSpeed, bool IsMoveable) :
   m_Edges(),
   m_IsMortal(true),
   m_IsOnScreen(true),//hack!should be default false and then logic in setPosition
-  m_IsMoveable(IsMoveable)
+  m_IsMoveable(IsMoveable),
+  m_IsDead(false),
+  m_Killer(nullptr)
 {
   // Empty
 }
@@ -107,8 +109,22 @@ bool IBaseObject::IsOnScreen() const
   return m_IsOnScreen;
 }
 
+bool IBaseObject::IsDead() const
+{
+  return m_IsDead;
+}
+
 void IBaseObject::Kill(const IBaseObject * killer) const
 {
-  // Empty
+  if (m_IsMortal)
+  {
+    m_IsDead = true;
+    m_Killer = killer;
+  }
+}
+
+const IBaseObject * IBaseObject::GetKiller() const
+{
+  return m_Killer;
 }
 

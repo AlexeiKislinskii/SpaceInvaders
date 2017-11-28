@@ -22,7 +22,9 @@ public:
   void SetIsOnScreen(bool state);
   bool IsOnScreen() const;
 
-  virtual void Kill(const IBaseObject * killer) const;
+  bool IsDead() const;
+  void Kill(const IBaseObject * killer) const;
+  const IBaseObject * GetKiller() const;
 
 protected:
   void SetTexture(std::vector<std::string> & Texture);
@@ -39,5 +41,8 @@ private:
   bool m_IsMoveable;
   bool m_IsMortal;
   bool m_IsOnScreen;
+  mutable bool m_IsDead;
+
+  mutable const IBaseObject * m_Killer;
 };
 

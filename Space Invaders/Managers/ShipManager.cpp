@@ -5,8 +5,8 @@
 #include "../Objects/Bullets/Laser.h"
 
 CShipManager::CShipManager() :
-  m_PlayerShip(nullptr),
-  m_AllShips()
+  IUpdateable(FAST_UPDATE),
+  m_PlayerShip(nullptr)
 {
 }
 
@@ -17,44 +17,83 @@ void CShipManager::Init()
   TrySpawnEnemyShip();
 }
 
-CPlayerShip & CShipManager::GetPlayerShip() const
+const CPlayerShip * CShipManager::GetPlayerShip() const
 {
-  return *m_PlayerShip;
+  return m_PlayerShip;
 }
 
 void CShipManager::StopAllShips() const
 {
-  for (auto ship : m_AllShips)
-    ship->DisableCruiseControl();
-}
-
-void CShipManager::OnShipKilling(const IBaseShip * Ship, const IBaseObject * killer)
-{
-  if (Ship == m_PlayerShip)
-    PlayerProfile.ReduceLife();
-  else
+  auto Objects = MapManager.GetCurrentMap().GetAllObjects();
+  for ( auto obj : Objects )
   {
-    if (killer == m_PlayerShip)
-      PlayerProfile.AddScore(15);//killed by ram, "Yippee-kai-yay, motherfucker!"
-    else
-    {
-      auto Laser = dynamic_cast<const CLaser *>(killer);//here should be base weapon, not laser
-      if (Laser && Laser->GetOwner() == m_PlayerShip)
-        PlayerProfile.AddScore(15);//we should take value from player profile
-    }
+    auto ship = static_cast<IBaseShip *>(obj);
+    if (!ship)
+      continue;
+
+    ship->DisableCruiseControl();
   }
 }
 
-  void CShipManager::OnShipDestruction(const IBaseShip * Ship)
+void CShipManager::Update(double time)
 {
-  if (Ship == m_PlayerShip)
-    TrySpawnPlayerShip();
-  else
-    TrySpawnEnemyShip();
+  auto Objects = MapManager.GetCurrentMap().GetAllObjects();
+  m_PlayerShip = nullptr;
+  for (auto obj : Objects)
+  {
+    if (!static_cast< const IBaseShip * >(obj))
+      continue;
 
-  auto it = std::find(m_AllShips.begin(), m_AllShips.end(), Ship);
-  if (it != m_AllShips.end())
-    m_AllShips.erase(it);
+    auto playerShip = dynamic_cast<CPlayerShip *>(obj);
+
+    if ( dynamic_cast< CPlayerShip * >( obj ) )
+    {
+      m_PlayerShip = playerShip;
+    }
+  }
+
+  if (!m_PlayerShip)
+    TrySpawnPlayerShip();
+
+  if ( !m_PlayerShip )
+    return;
+
+  size_t EnemysShipCount = 0;
+  for (auto obj : Objects)
+  {
+    if (!dynamic_cast<const IBaseShip *>(obj))
+      continue;
+
+    auto enemyShip = dynamic_cast<CEnemyShip *>(obj);
+
+    if (enemyShip)
+    {
+      EnemysShipCount++;
+    }
+
+    if (obj->IsDead())
+    {
+      if (enemyShip)
+      {
+        auto killer = obj->GetKiller();
+        if (killer == m_PlayerShip)
+          PlayerProfile.AddScore(15);//killed by ram, "Yippee-kai-yay, motherfucker!"
+        else
+        {
+          auto Laser = dynamic_cast<const CLaser *>(killer);//here should be base weapon, not laser
+          if (Laser && Laser->GetOwner() == m_PlayerShip)
+            PlayerProfile.AddScore(15);//we should take value from player profile
+        }
+      }
+      else
+        PlayerProfile.ReduceLife();
+    }
+  }
+
+  for ( size_t i = 0; i < 2 - EnemysShipCount; i++ )
+  {
+    TrySpawnEnemyShip();
+  }
 }
 
 void CShipManager::TrySpawnPlayerShip()
@@ -64,16 +103,10 @@ void CShipManager::TrySpawnPlayerShip()
 
   m_PlayerShip = new CPlayerShip();
 
-  m_AllShips.push_back(m_PlayerShip);
-
   MapManager.GetCurrentMap().AddObject(m_PlayerShip);
 }
 
 void CShipManager::TrySpawnEnemyShip()//try? we do!
 {
-  IBaseShip * Ship = new CEnemyShip();
-
-  m_AllShips.push_back(Ship);
-
-  MapManager.GetCurrentMap().AddObject(Ship);
+  MapManager.GetCurrentMap().AddObject(new CEnemyShip());
 }

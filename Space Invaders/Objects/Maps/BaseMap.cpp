@@ -14,7 +14,7 @@ void CBaseMap::Generate()
   int PlacementPosition = 1;
   int Density = 40;
 
-  while (PlacementPosition < m_Width)
+  while ((size_t)PlacementPosition < m_Width)
   {
     auto TopRock = new CRock(CVector2i(0, PlacementPosition), true);
     TopRock->Generate();
@@ -31,20 +31,6 @@ void CBaseMap::AddObject(IBaseObject * object)
   m_AllObjects.push_front(object);
 }
 
-std::list<IBaseObject *>::const_iterator CBaseMap::DeleteObject(const IBaseObject * object)
-{
-  //at momment of comment writing this find is excessive
-  auto it = std::find(m_AllObjects.begin(), m_AllObjects.end(), object);
-
-  if (it != m_AllObjects.end())
-  {
-    delete *it;
-    it = m_AllObjects.erase(it);
-  }
-
-  return it;
-}
-
 const std::list<IBaseObject*> & CBaseMap::GetAllObjects() const
 {
   return m_AllObjects;
@@ -52,6 +38,15 @@ const std::list<IBaseObject*> & CBaseMap::GetAllObjects() const
 
 void CBaseMap::Update(double time)
 {
-  for (IBaseObject * obj : m_AllObjects)
-    obj->TryUpdate(time);
+  for (auto it = m_AllObjects.begin(); it != m_AllObjects.end();)
+  {
+    if ((*it)->IsDead())
+    {
+      delete *it;
+      it = m_AllObjects.erase(it);
+      continue;
+    }
+    (*it)->TryUpdate(time);
+    it++;
+  }
 }

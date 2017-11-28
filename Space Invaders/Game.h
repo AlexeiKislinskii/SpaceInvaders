@@ -8,6 +8,7 @@
 #include "PlayerProfiler.h"
 #include "Menu/GameMenu.h"
 #include "Enums/Input.h"
+#include "Structs/Assert.h"
 
 #define Game CGame::GetInstance()
 #define MapManager CGame::GetInstance().GetMapManager()
