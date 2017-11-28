@@ -20,39 +20,39 @@ CRenderer::CRenderer() :
   CONSOLE_CURSOR_INFO CursorInfo;
   CONSOLE_SCREEN_BUFFER_INFO CursorBufferInfo;
 
-  m_ConsoleHandle = GetStdHandle( STD_OUTPUT_HANDLE );
+  m_ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
-  GetConsoleScreenBufferInfo( m_ConsoleHandle, &CursorBufferInfo );
-  m_ScreenWidth = ( size_t )( CursorBufferInfo.srWindow.Right - CursorBufferInfo.srWindow.Left + 1 );
-  m_ScreenHeight = ( size_t )( CursorBufferInfo.srWindow.Bottom - CursorBufferInfo.srWindow.Top + 1 );
+  GetConsoleScreenBufferInfo(m_ConsoleHandle, &CursorBufferInfo);
+  m_ScreenWidth = (size_t)(CursorBufferInfo.srWindow.Right - CursorBufferInfo.srWindow.Left + 1);
+  m_ScreenHeight = (size_t)(CursorBufferInfo.srWindow.Bottom - CursorBufferInfo.srWindow.Top + 1);
 
-  SetConsoleScreenBufferSize( m_ConsoleHandle, COORD{ ( short )m_ScreenWidth, ( short )m_ScreenHeight - 1 } );
+  SetConsoleScreenBufferSize(m_ConsoleHandle, COORD{ ( short )m_ScreenWidth, ( short )m_ScreenHeight - 1 });
 
-  GetConsoleCursorInfo( m_ConsoleHandle, &CursorInfo );
+  GetConsoleCursorInfo(m_ConsoleHandle, &CursorInfo);
   CursorInfo.bVisible = false;
-  SetConsoleCursorInfo( m_ConsoleHandle, &CursorInfo );
+  SetConsoleCursorInfo(m_ConsoleHandle, &CursorInfo);
 
-  m_CurrentRenderMap = m_LastRenderMap = std::vector<std::string>( m_ScreenHeight );
+  m_CurrentRenderMap = m_LastRenderMap = std::vector<std::string>(m_ScreenHeight);
 
-  for ( size_t i = 0; i < m_ScreenHeight; i++ )
-    m_CurrentRenderMap[i] = m_LastRenderMap[i] = std::string( m_ScreenWidth, ' ' );
+  for (size_t i = 0; i < m_ScreenHeight; i++)
+    m_CurrentRenderMap[i] = m_LastRenderMap[i] = std::string(m_ScreenWidth, ' ');
 }
 
 void CRenderer::Update(double time)
 {
   auto & Map = MapManager.GetCurrentMap();
   auto & Objects = Map.GetAllObjects();
-  for ( IBaseObject * Obj : Objects )
-    Add( *Obj );
+  for (IBaseObject * Obj : Objects)
+    Add(*Obj);
 
   UpdateHUD();
   Output();
 
-  for ( auto & line : m_CurrentRenderMap )
-    for ( auto & symbol : line )
+  for (auto & line : m_CurrentRenderMap)
+    for (auto & symbol : line)
       symbol = ' ';
 
-  if ( m_CameraYPosition + m_ScreenWidth >= Map.GetWidth() )
+  if (m_CameraYPosition + m_ScreenWidth >= Map.GetWidth())
     ShipManager.StopAllShips();
 }
 
@@ -97,7 +97,7 @@ const CRect CRenderer::GetScreenRect() const
   return CRect(CVector2i(0, m_CameraYPosition), m_ScreenHeight, m_ScreenWidth);
 }
 
-void CRenderer::SetRenderPosition( int Position )
+void CRenderer::SetRenderPosition(int Position)
 {
   m_CameraYPosition = Position;
 }

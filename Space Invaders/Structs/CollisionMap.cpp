@@ -30,7 +30,7 @@ const IBaseObject * CollisionMap::AddMember(const IBaseObject * NewMember)
       if (Texture[i][j] == ' ')
         continue;
 
-      auto PointLocalCord = WorldToLocalPosition(CVector2i(Pos.x + i, Pos.y + j));
+      auto PointLocalCord = WorldToLocalPosition(CVector2i(Pos.x + (int)i, Pos.y + (int)j));
 
       if (PointLocalCord.x < 0 || PointLocalCord.x >= (int)m_Height || 
           PointLocalCord.y < 0 || PointLocalCord.y >= (int)m_Width)
@@ -56,7 +56,7 @@ void CollisionMap::CleanFrom(const IBaseObject * Member)
       if (Texture[i][j] == ' ')
         continue;
 
-      auto PointLocalCord = WorldToLocalPosition(CVector2i(Pos.x + i, Pos.y + j));
+      auto PointLocalCord = WorldToLocalPosition(CVector2i(Pos.x + (int)i, Pos.y + (int)j));
 
       if (PointLocalCord.x < 0 || PointLocalCord.x >= (int)m_Height ||
           PointLocalCord.y < 0 || PointLocalCord.y >= (int)m_Width)

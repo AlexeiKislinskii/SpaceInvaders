@@ -25,7 +25,7 @@ const CPlayerShip * CShipManager::GetPlayerShip() const
 void CShipManager::StopAllShips() const
 {
   auto Objects = MapManager.GetCurrentMap().GetAllObjects();
-  for ( auto obj : Objects )
+  for (auto obj : Objects)
   {
     auto ship = static_cast<IBaseShip *>(obj);
     if (!ship)
@@ -46,7 +46,7 @@ void CShipManager::Update(double time)
 
     auto playerShip = dynamic_cast<CPlayerShip *>(obj);
 
-    if ( dynamic_cast< CPlayerShip * >( obj ) )
+    if (dynamic_cast< CPlayerShip * >(obj))
     {
       m_PlayerShip = playerShip;
     }
@@ -55,7 +55,7 @@ void CShipManager::Update(double time)
   if (!m_PlayerShip)
     TrySpawnPlayerShip();
 
-  if ( !m_PlayerShip )
+  if (!m_PlayerShip)
     return;
 
   size_t EnemysShipCount = 0;
@@ -90,7 +90,7 @@ void CShipManager::Update(double time)
     }
   }
 
-  for ( size_t i = 0; i < 2 - EnemysShipCount; i++ )
+  for (size_t i = 0; i < 2 - EnemysShipCount; i++)
   {
     TrySpawnEnemyShip();
   }

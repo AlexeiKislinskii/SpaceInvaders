@@ -44,13 +44,6 @@ void CPlayerShip::Update(double time)
     m_YAxisOffsetByUser += m_MoveFromUser.y;
     Renderer.SetRenderPosition(GetBounds().pos.y - m_YAxisOffsetByUser);
   }
-
-  std::string t = "User move vector x:";
-  t += std::to_string( m_MoveFromUser.x );
-  t += " y:";
-  t += std::to_string( m_MoveFromUser.y);
-  t += "\n";
-  LOG(t);
 }
 
 int CPlayerShip::GetPositionForCamera() const
