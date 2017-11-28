@@ -26,7 +26,7 @@ CRenderer::CRenderer() :
   m_ScreenWidth = (size_t)(CursorBufferInfo.srWindow.Right - CursorBufferInfo.srWindow.Left + 1);
   m_ScreenHeight = (size_t)(CursorBufferInfo.srWindow.Bottom - CursorBufferInfo.srWindow.Top + 1);
 
-  SetConsoleScreenBufferSize(m_ConsoleHandle, COORD{ ( short )m_ScreenWidth, ( short )m_ScreenHeight - 1 });
+  SetConsoleScreenBufferSize(m_ConsoleHandle, COORD{(short)m_ScreenWidth, (short)m_ScreenHeight - 1 });
 
   GetConsoleCursorInfo(m_ConsoleHandle, &CursorInfo);
   CursorInfo.bVisible = false;

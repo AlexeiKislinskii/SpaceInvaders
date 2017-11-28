@@ -28,7 +28,9 @@ void CInputHandler::Update()
   {
     DWORD count = 0;
     INPUT_RECORD m_Event[3];
-    ReadConsoleInput(m_Handle, m_Event, 3, &count);
+    if (!ReadConsoleInput(m_Handle, m_Event, 3, &count))
+      return;
+
     for (size_t i = 0; i < count; i++)
     {
       if (m_Event[i].EventType == KEY_EVENT)
