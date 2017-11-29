@@ -36,6 +36,8 @@ public:
 
 private:
   void InputHandler(EInput input, bool isPressed);
+  void ConsoleFocusHandler(bool isFocused);
+  void PauseGame(EGameState state);
   void StartNewGame();
   void LoadGame();
   void ContinueGame();

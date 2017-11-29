@@ -70,13 +70,10 @@ void CInputHandler::Update()
           break;
         }
       }
-      /*else if(m_Event[i].EventType == FOCUS_EVENT)
+      else if(m_Event[i].EventType == FOCUS_EVENT)
       {
-        if(m_Event[i].Event.FocusEvent.bSetFocus != false)
-          OutputDebugString(L"Focused\n");
-        else
-          OutputDebugString(L"UnFocused\n");
-      }*/
+        FocusSignal.Emit( m_Event[i].Event.FocusEvent.bSetFocus != false );
+      }
     }
   }
 }

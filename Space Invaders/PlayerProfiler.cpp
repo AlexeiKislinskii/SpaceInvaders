@@ -1,20 +1,21 @@
 #include "PlayerProfiler.h"
 
 CPlayerProfiler::CPlayerProfiler():
-  m_LifesCount(3),//take from config or save
-  m_Score(0),
-  m_GameOver(false)
+  m_MaxLifeCount(3),
+  m_LifesCount(0),//take from config or save
+  m_Score(0)
 {
+  Reset();
+}
+
+void CPlayerProfiler::Reset()
+{
+  m_LifesCount = m_MaxLifeCount;
+  m_Score = 0;
 }
 
 void CPlayerProfiler::ReduceLife()
 {
-  if (m_LifesCount == 0)
-  {
-    m_GameOver = true;
-    return;
-  }
-
   m_LifesCount--;
 }
 
@@ -25,7 +26,7 @@ void CPlayerProfiler::AddScore(size_t score)
 
 bool CPlayerProfiler::IsLifeEnded() const
 {
-  return m_GameOver;
+  return m_LifesCount < 0;
 }
 
 size_t CPlayerProfiler::GetScore() const
@@ -33,7 +34,7 @@ size_t CPlayerProfiler::GetScore() const
   return m_Score;
 }
 
-size_t CPlayerProfiler::GetLifesCount() const
+int CPlayerProfiler::GetLifesCount() const
 {
   return m_LifesCount;
 }

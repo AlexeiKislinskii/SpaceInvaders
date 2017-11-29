@@ -14,6 +14,7 @@ public:
   void Update();
 
   CSignal<EInput, bool> Signal;
+  CSignal<bool>         FocusSignal;
 private:
   const HANDLE m_Handle;
 };
