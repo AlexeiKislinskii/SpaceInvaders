@@ -11,31 +11,20 @@ CRock::CRock(CVector2i StartPosition, bool Upend) :
 void CRock::Generate()
 {
   size_t Height = 4 + rand() % 6;
-  size_t Width = Height * 2;
 
   std::vector<std::string> Texture(Height);
 
   for (std::string & Row : Texture)
-    for (size_t i = 0; i < Width; i++)
-      Row += ' ';
+    Row.resize(Height * 2, ' ');
 
   for (size_t i = 0; i < Height; i++)
   {
-    size_t PosWithOffset = Height - 1 - i;
-    Texture[m_IsUpended ? PosWithOffset : i][PosWithOffset] = m_IsUpended ? '\\' : '/';
-    Texture[m_IsUpended ? PosWithOffset : i][Height + i] = m_IsUpended ? '/' : '\\';
-  }
-  for (size_t i = 0; i < Height; i++)
-  {
-    size_t PosWithOffset = Height - 1 - i;
+    size_t PosWithOffset = Height - i - 1;
     size_t XPos = m_IsUpended ? PosWithOffset : i;
-    for (size_t j = 0; j < Width; j++)
-    {
-      if (j < PosWithOffset || j > Height + i)
-        Texture[XPos][j] = ' ';
-      else if (j > PosWithOffset && j < Height + i)
-        Texture[XPos][j] = '@';
-    }
+
+    for (size_t j = PosWithOffset + 1; j < Height + i; j++)
+      Texture[XPos][j] = '@';
+
     Texture[XPos][PosWithOffset] = m_IsUpended ? '\\' : '/';
     Texture[XPos][Height + i] = m_IsUpended ? '/' : '\\';
   }
@@ -48,14 +37,9 @@ void CRock::Generate()
     Bounds.pos.x -= (int)Bounds.height;
     SetPosition(Bounds.pos);
   }
-
-  ////need to srand
-  //size_t Height = 4 + rand() % 10;
-  //size_t Width = 4 + rand() % 10;
-
-
 }
 
 void CRock::Update(double time)
 {
+  // Empty
 }

@@ -10,9 +10,8 @@ public:
   void Generate();
 
 protected:
-  void Update(double time);
+  void Update( double time );
 
 private:
   bool m_IsUpended;
 };
-
