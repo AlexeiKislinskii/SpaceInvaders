@@ -2,7 +2,7 @@
 #include <intrin.h>
 #include <Windows.h>
 
-void CAssert::Assert(bool isPassed, std::string errorLog)
+void CAssert::Assert(bool isPassed, const std::string & errorLog)
 {
   if ( !isPassed )
   {
@@ -11,7 +11,7 @@ void CAssert::Assert(bool isPassed, std::string errorLog)
   }
 }
 
-void CAssert::Log(std::string log)
+void CAssert::Log(const std::string & log)
 {
   OutputDebugString(std::wstring(log.begin(), log.end()).data());
 }

@@ -8,7 +8,7 @@ class CAssert
 {
 public:
 
-  static void Assert( bool isPassed, std::string errorLog = "");
-  static void Log( std::string log );
+  static void Assert(bool isPassed, const std::string & errorLog = "");
+  static void Log(const std::string & log);
 };
 

@@ -47,6 +47,6 @@ void CBaseMap::Update(double time)
       continue;
     }
     (*it)->TryUpdate(time);
-    it++;
+    ++it;
   }
 }
