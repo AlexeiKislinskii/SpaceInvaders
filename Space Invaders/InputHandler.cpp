@@ -36,39 +36,53 @@ void CInputHandler::Update()
       if (m_Event[i].EventType == KEY_EVENT)
       {
         bool isPressed = m_Event[i].Event.KeyEvent.bKeyDown == 0 ? false : true;
+        EInput userInput;
         switch (m_Event[i].Event.KeyEvent.wVirtualKeyCode)
         {
         case 65://A
-          Signal.Emit(INPUT_A, isPressed);
+          userInput = INPUT_A;
           break;
         case 37://left arrow
-          Signal.Emit(INPUT_LEFT, isPressed);
+          userInput = INPUT_LEFT;
           break;
         case 68://D
-          Signal.Emit(INPUT_D, isPressed);
+          userInput = INPUT_D;
           break;
         case 39://right arrow
-          Signal.Emit(INPUT_RIGHT, isPressed);
+          userInput = INPUT_RIGHT;
           break;
         case 87://W
-          Signal.Emit(INPUT_W, isPressed);
+          userInput = INPUT_W;
           break;
         case 38://up arrow
-          Signal.Emit(INPUT_UP, isPressed);
+          userInput = INPUT_UP;
           break;
         case 83://S
-          Signal.Emit(INPUT_S, isPressed);
+          userInput = INPUT_S;
           break;
         case 40://down arrow
-          Signal.Emit(INPUT_DOWN, isPressed);
+          userInput = INPUT_DOWN;
           break;
         case 32://space
-          Signal.Emit(INPUT_SPACE, isPressed);
+          userInput = INPUT_SPACE;
           break;
         case 27://escape
-          Signal.Emit(INPUT_ESC, isPressed);
-          break;
+          FocusSignal.Emit(false);
+          return;
+        default:
+          return;
         }
+
+        if(!m_UserInputList.empty() && m_UserInputList.back() == userInput && isPressed)
+          return;
+
+        if (isPressed)
+          m_UserInputList.push_back(userInput);
+        else
+          for (auto it = m_UserInputList.begin(); it != m_UserInputList.end();)
+            ((*it) == userInput) ? (it = m_UserInputList.erase(it)) : it++;
+
+        Signal.Emit(m_UserInputList);
       }
       else if(m_Event[i].EventType == FOCUS_EVENT)
       {
@@ -76,4 +90,9 @@ void CInputHandler::Update()
       }
     }
   }
+}
+
+const std::vector<EInput>& CInputHandler::GetUserInput() const
+{
+  return m_UserInputList;
 }

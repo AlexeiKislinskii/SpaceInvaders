@@ -33,7 +33,6 @@ void CGame::Init()
   m_PlayerProfile = new CPlayerProfiler();
   m_MainMenu = new CGameMenu();
 
-  CInputHandler::GetInstance().Signal.Connect(this, &CGame::InputHandler);
   CInputHandler::GetInstance().FocusSignal.Connect(this, &CGame::ConsoleFocusHandler);
 
   PauseGame(JUST_STARTED);
@@ -57,14 +56,6 @@ EGameState CGame::Update(double time)
   }
 
   return m_GameState;
-}
-
-void CGame::InputHandler(EInput input, bool isPressed)
-{
-  if (input == INPUT_ESC && !isPressed)
-  {
-    PauseGame(PAUSED_BY_USER);
-  }
 }
 
 void CGame::ConsoleFocusHandler(bool isFocused)

@@ -13,9 +13,12 @@ public:
 
   void Update();
 
-  CSignal<EInput, bool> Signal;
+  const std::vector<EInput> & GetUserInput() const;
+
+  CSignal<const std::vector<EInput> &> Signal;
   CSignal<bool>         FocusSignal;
 private:
   const HANDLE m_Handle;
+  std::vector<EInput> m_UserInputList;
 };
 

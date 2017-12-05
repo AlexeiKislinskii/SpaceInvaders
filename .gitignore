@@ -2,9 +2,8 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/x64/Debug
-/.vs/Space Invaders/v14/.suo
+/x64
+/.vs
 /Space Invaders/x64
 /Space Invaders/Debug
 /Space Invaders/Release
-/x64/Release

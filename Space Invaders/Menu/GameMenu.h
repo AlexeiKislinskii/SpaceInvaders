@@ -17,7 +17,7 @@ public:
 
   void Update();
 private:
-  void InputHandle(EInput input, bool isPressed);
+  void InputHandler(const std::vector<EInput> & input);
 
   const HANDLE m_Handle;
   int          m_InputSignalIndex;

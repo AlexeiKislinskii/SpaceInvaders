@@ -15,7 +15,7 @@ protected:
   void Update(double time) override;
 
 private:
-  void InputHandler(EInput input, bool isPressed);
+  void InputHandler(const std::vector<EInput> & input);
 
   int m_ConnectIndex;
   int m_YAxisOffsetByUser;

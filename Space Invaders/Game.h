@@ -35,7 +35,6 @@ public:
   CCollisionEngine & GetCollisionManager() const { return *m_CollisionEngine; };
 
 private:
-  void InputHandler(EInput input, bool isPressed);
   void ConsoleFocusHandler(bool isFocused);
   void PauseGame(EGameState state);
   void StartNewGame();

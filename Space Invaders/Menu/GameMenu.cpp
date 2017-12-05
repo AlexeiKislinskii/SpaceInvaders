@@ -19,7 +19,7 @@ void CGameMenu::Show(MenuList & items, int startIndex)
 {
   m_Items = std::move(items);
   m_Index = startIndex;
-  m_InputSignalIndex = CInputHandler::GetInstance().Signal.Connect(this, &CGameMenu::InputHandle);
+  m_InputSignalIndex = CInputHandler::GetInstance().Signal.Connect(this, &CGameMenu::InputHandler);
 }
 
 void CGameMenu::Hide()
@@ -28,22 +28,29 @@ void CGameMenu::Hide()
   CInputHandler::GetInstance().Signal.Disconnect(m_InputSignalIndex);
 }
 
-void CGameMenu::InputHandle(EInput input, bool isPressed)
+void CGameMenu::InputHandler(const std::vector<EInput> & input)
 {
-  if (!isPressed && !m_Items.empty())
+  for (int i = (int)input.size() - 1; i >= 0; i--)
   {
-    switch (input)
+    if (input[i] == INPUT_SPACE)
     {
-    case INPUT_W:
-    case INPUT_UP:
+      m_Items[m_Index].second();
+      return;
+    }
+  }
+  for (int i = (int)input.size() - 1; i >= 0; i--)
+  {
+    if (input[i] == INPUT_W || input[i] == INPUT_UP)
+    {
       m_Index = m_Index > 0 ? m_Index - 1 : (int)m_Items.size() - 1;
       break;
-    case INPUT_S:
-    case INPUT_DOWN:
+    }
+  }
+  for (int i = (int)input.size() - 1; i >= 0; i--)
+  {
+    if (input[i] == INPUT_S || input[i] == INPUT_DOWN)
+    {
       m_Index = m_Index < m_Items.size() - 1 ? m_Index + 1 : 0;
-      break;
-    case INPUT_SPACE:
-      m_Items[m_Index].second();
       break;
     }
   }

@@ -20,6 +20,7 @@ CPlayerShip::CPlayerShip() :
   m_Weapon = new CLaserLauncher(this, CVector2i(1, 5), MOVE_RIGHT);
 
   m_ConnectIndex = CInputHandler::GetInstance().Signal.Connect(this, &CPlayerShip::InputHandler);
+  InputHandler(CInputHandler::GetInstance().GetUserInput());
 
 #ifdef _DEBUG
   SetMortality(false);
@@ -51,46 +52,23 @@ int CPlayerShip::GetPositionForCamera() const
   return GetBounds().pos.y - m_YAxisOffsetByUser;
 }
 
-void CPlayerShip::InputHandler(EInput input, bool isPressed)
+void CPlayerShip::InputHandler(const std::vector<EInput> & input)
 {
-  switch (input)
+  m_IsFireFromUser = false;
+  m_MoveFromUser.x = 0;
+  m_MoveFromUser.y = 0;
+
+  for (int i = (int)input.size() - 1; i >= 0; i--)
   {
-  case INPUT_A:
-  case INPUT_LEFT:
-  {
-    int move = isPressed ? -1 : 1;
-    if ( m_MoveFromUser.y != move )
-      m_MoveFromUser.y += move;
-    break;
-  }
-  case INPUT_D:
-  case INPUT_RIGHT:
-  {
-    int move = isPressed ? 1 : -1;
-    if ( m_MoveFromUser.y != move )
-      m_MoveFromUser.y += move;
-    break;
-  }
-  case INPUT_W:
-  case INPUT_UP:
-  {
-    int move = isPressed ? -1 : 1;
-    if ( m_MoveFromUser.x != move )
-      m_MoveFromUser.x += move;
-    break;
-  }
-  case INPUT_S:
-  case INPUT_DOWN:
-  {
-    int move = isPressed ? 1 : -1;
-    if ( m_MoveFromUser.x != move )
-      m_MoveFromUser.x += move;
-    break;
-  }
-  case INPUT_SPACE:
-    m_IsFireFromUser = isPressed;
-    break;
-  default:
-    break;
+    if (input[i] == INPUT_SPACE)
+      m_IsFireFromUser = true;
+    if (m_MoveFromUser.x == 0 && (input[i] == INPUT_W || input[i] == INPUT_UP))
+      m_MoveFromUser.x = -1;
+    if (m_MoveFromUser.x == 0 && (input[i] == INPUT_S || input[i] == INPUT_DOWN))
+      m_MoveFromUser.x = 1;
+    if (m_MoveFromUser.y == 0 && (input[i] == INPUT_A || input[i] == INPUT_LEFT))
+      m_MoveFromUser.y = -1;
+    if (m_MoveFromUser.y == 0 && (input[i] == INPUT_D || input[i] == INPUT_RIGHT))
+      m_MoveFromUser.y = 1;
   }
 }

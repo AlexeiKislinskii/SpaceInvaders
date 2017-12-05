@@ -10,6 +10,5 @@ enum EInput
   INPUT_UP,
   INPUT_S,
   INPUT_DOWN,
-  INPUT_SPACE,
-  INPUT_ESC
+  INPUT_SPACE
 };
