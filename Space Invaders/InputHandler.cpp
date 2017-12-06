@@ -1,4 +1,4 @@
-#include "InputHandler.h"
+﻿#include "InputHandler.h"
 #include "Game.h"
 
 CInputHandler * ISingletone<CInputHandler>::p_instance = nullptr;
@@ -6,7 +6,6 @@ CInputHandler * ISingletone<CInputHandler>::p_instance = nullptr;
 CInputHandler::CInputHandler() :
   m_Handle(GetStdHandle(STD_INPUT_HANDLE))
 {
-  //move from constructor to init
   DWORD mode;
 
   //prevent selecting with mouse
@@ -18,7 +17,7 @@ CInputHandler::CInputHandler() :
   HWND hwnd = GetConsoleWindow();
   LONG dwStyle = GetWindowLong(hwnd, GWL_STYLE);
   dwStyle ^= WS_THICKFRAME;//disable resize by mouse near edges
-  dwStyle ^= WS_MAXIMIZEBOX;//disable maximize button n right top corner
+  dwStyle ^= WS_MAXIMIZEBOX;//disable maximize button in right top corner
   SetWindowLong(hwnd, GWL_STYLE, dwStyle);
 }
 
@@ -39,33 +38,15 @@ void CInputHandler::Update()
         EInput userInput;
         switch (m_Event[i].Event.KeyEvent.wVirtualKeyCode)
         {
-        case 65://A
-          userInput = INPUT_A;
-          break;
-        case 37://left arrow
-          userInput = INPUT_LEFT;
-          break;
-        case 68://D
-          userInput = INPUT_D;
-          break;
-        case 39://right arrow
-          userInput = INPUT_RIGHT;
-          break;
-        case 87://W
-          userInput = INPUT_W;
-          break;
-        case 38://up arrow
-          userInput = INPUT_UP;
-          break;
-        case 83://S
-          userInput = INPUT_S;
-          break;
-        case 40://down arrow
-          userInput = INPUT_DOWN;
-          break;
-        case 32://space
-          userInput = INPUT_SPACE;
-          break;
+        case 65: userInput = INPUT_A;     break; //A
+        case 37: userInput = INPUT_LEFT;  break; //left arrow
+        case 68: userInput = INPUT_D;     break; //D
+        case 39: userInput = INPUT_RIGHT; break; //right arrow
+        case 87: userInput = INPUT_W;     break; //W
+        case 38: userInput = INPUT_UP;    break; //up arrow
+        case 83: userInput = INPUT_S;     break; //S
+        case 40: userInput = INPUT_DOWN;  break; //down arrow
+        case 32: userInput = INPUT_SPACE; break; //space
         case 27://escape
           FocusSignal.Emit(false);
           return;

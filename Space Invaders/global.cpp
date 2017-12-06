@@ -3,13 +3,6 @@
 #include <Windows.h>
 #include <chrono>
 
-
-/*
-FIRST PRIORITE!!Need to fix self killing on forward moving
-Add pause logic for all updateable objects, call it on game pause, also in this logic remove first fire on game starting
-Delete UserInput.h
-*/
-
 void main()
 {
 #ifdef NDEBUG
@@ -25,9 +18,7 @@ void main()
 
   QueryPerformanceFrequency(&freq);
 
-  freq.QuadPart /= 2;//hack!, because i know that my cpu has 2 cores
-
-  EGameState result = PAUSED_BY_USER;
+  EGameState result = JUST_STARTED;
   while (result != EXIT)
   {
     QueryPerformanceCounter(&time);

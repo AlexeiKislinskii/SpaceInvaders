@@ -7,9 +7,8 @@ struct CollisionMap
 
   ~CollisionMap();
 
-  //Function take pointer to new member add all his edges in total map
+  //Function take pointer to new member, add all his edges in total map
   //if collision happen return pointer to object with which a collision occurred and 
-  //delete both objects from map
   //if collision not happen returned value is nullptr
   const IBaseObject * AddMember(const IBaseObject * NewMember);
 
