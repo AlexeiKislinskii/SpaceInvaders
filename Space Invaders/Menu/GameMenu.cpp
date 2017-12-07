@@ -30,12 +30,21 @@ void CGameMenu::Hide()
 
 void CGameMenu::InputHandler(const std::vector<EInput> & input)
 {
+  static bool isSpaceWasPressed = false;
+
+  if (std::find(input.begin(), input.end(), INPUT_SPACE) == input.end() && isSpaceWasPressed)
+  {
+    isSpaceWasPressed = false;
+    m_Items[m_Index].second();
+    return;
+  }
+
   for (int i = (int)input.size() - 1; i >= 0; i--)
   {
     if (input[i] == INPUT_SPACE)
     {
-      m_Items[m_Index].second();
-      return;
+      isSpaceWasPressed = true;
+      break;
     }
   }
   for (int i = (int)input.size() - 1; i >= 0; i--)
