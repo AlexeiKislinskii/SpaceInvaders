@@ -67,7 +67,31 @@ void CInputHandler::Update()
       }
       else if(m_Event[i].EventType == FOCUS_EVENT)
       {
-        FocusSignal.Emit( m_Event[i].Event.FocusEvent.bSetFocus != false );
+        for (auto it = m_UserInputList.begin(); it != m_UserInputList.end();)
+        {
+          SHORT result = 0;
+          switch (*it)
+          {
+          case INPUT_A:     result = GetKeyState(65); break; //A
+          case INPUT_LEFT:  result = GetKeyState(37); break; //left arrow
+          case INPUT_D:     result = GetKeyState(68); break; //D
+          case INPUT_RIGHT: result = GetKeyState(39); break; //right arrow
+          case INPUT_W:     result = GetKeyState(87); break; //W
+          case INPUT_UP:    result = GetKeyState(38); break; //up arrow
+          case INPUT_S:     result = GetKeyState(83); break; //S
+          case INPUT_DOWN:  result = GetKeyState(40); break; //down arrow
+          case INPUT_SPACE: result = GetKeyState(32); break; //space
+          }
+
+          if (result & 0x8000)
+          {
+            it++;
+            continue;
+          }
+
+          it = m_UserInputList.erase(it);
+        }
+        FocusSignal.Emit(m_Event[i].Event.FocusEvent.bSetFocus != false);
       }
     }
   }

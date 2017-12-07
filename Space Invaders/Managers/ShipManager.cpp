@@ -27,10 +27,10 @@ void CShipManager::StopAllShips() const
   auto Objects = MapManager.GetCurrentMap().GetAllObjects();
   for (auto obj : Objects)
   {
-    auto ship = static_cast<IBaseShip *>(obj);
+    auto ship = dynamic_cast<IBaseShip *>(obj);
     if (!ship)
       continue;
-
+  
     ship->DisableCruiseControl();
   }
 }
@@ -41,12 +41,12 @@ void CShipManager::Update(double time)
   m_PlayerShip = nullptr;
   for (auto obj : Objects)
   {
-    if (!static_cast< const IBaseShip * >(obj))
+    if (!dynamic_cast<const IBaseShip *>(obj))
       continue;
 
     auto playerShip = dynamic_cast<CPlayerShip *>(obj);
 
-    if (dynamic_cast< CPlayerShip * >(obj))
+    if (dynamic_cast<CPlayerShip *>(obj))
     {
       m_PlayerShip = playerShip;
     }

@@ -4,9 +4,9 @@
 
 void CAssert::Assert(bool isPassed, const std::string & errorLog)
 {
-  if ( !isPassed )
+  if (!isPassed)
   {
-    LOG( errorLog.empty() ? "No description" : errorLog );
+    LOG(errorLog.empty() ? "No description" : errorLog);
     __debugbreak();
   }
 }

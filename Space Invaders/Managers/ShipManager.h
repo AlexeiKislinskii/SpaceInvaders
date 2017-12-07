@@ -14,7 +14,7 @@ public:
   void StopAllShips() const;
 
 protected:
-  void Update( double time ) override;
+  void Update(double time) override;
 
 private:
   void TrySpawnPlayerShip();

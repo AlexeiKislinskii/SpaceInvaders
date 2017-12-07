@@ -9,7 +9,7 @@ CGame::CGame() :
   m_Render(nullptr),
   m_CollisionEngine(nullptr),
   m_PlayerProfile(nullptr),
-  m_GameState(PAUSED_BY_USER),
+  m_GameState(EXIT),
   m_MainMenu(nullptr)
 {
 }
@@ -60,7 +60,7 @@ EGameState CGame::Update(double time)
 
 void CGame::ConsoleFocusHandler(bool isFocused)
 {
-  if(!isFocused)
+  if (!isFocused && m_GameState == PLAYING)
     PauseGame(PAUSED_BY_USER);
 }
 
@@ -88,6 +88,7 @@ void CGame::PauseGame(EGameState state)
 
 void CGame::StartNewGame()
 {
+  m_Render->SetRenderPosition(0);
   m_MapManager->Reset();
   m_ShipManager->Init();
   m_PlayerProfile->Reset();
@@ -100,6 +101,9 @@ void CGame::LoadGame()
 
 void CGame::ContinueGame()
 {
+  if (m_GameState == PLAYING)
+    return;
+
   m_GameState = PLAYING;
   m_MainMenu->Hide();
   m_Render->Clear();
