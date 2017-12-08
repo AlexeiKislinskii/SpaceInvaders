@@ -19,15 +19,15 @@ void CCollisionEngine::Update(double time)
   {
     if (!obj->IsOnScreen())
     {
-      obj->Kill(nullptr);
+      obj->TryKill(nullptr);
       continue;
     }
 
     auto object = Map.AddMember(obj);
     if (object)
     {
-      obj->Kill(object);
-      object->Kill(obj);
+      obj->TryKill(object);
+      object->TryKill(obj);
     }
   }
 }

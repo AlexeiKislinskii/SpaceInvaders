@@ -2,7 +2,7 @@
 #include "../../Game.h"
 
 IBaseShip::IBaseShip(EMoveDirection direction) :
-  IBaseObject(NORMAL_UPDATE, true),
+  IBaseObject(nullptr, NORMAL_UPDATE, true),
   m_Weapon(nullptr),
   m_IsCruiseControleEnebled(true)
 {

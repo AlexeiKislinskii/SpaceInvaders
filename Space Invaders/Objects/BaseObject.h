@@ -9,7 +9,7 @@ class IBaseObject :
   public IUpdateable
 {
 public:
-  IBaseObject(EUpdateSpeed UpdateSpeed, bool IsMoveable);
+  IBaseObject(const IBaseObject * Owner, EUpdateSpeed UpdateSpeed, bool IsMoveable);
   virtual ~IBaseObject();
 
   const std::vector<std::string> & GetTexture() const;
@@ -23,8 +23,9 @@ public:
   bool IsOnScreen() const;
 
   bool IsDead() const;
-  void Kill(const IBaseObject * killer) const;
+  void TryKill(const IBaseObject * killer) const;
   const IBaseObject * GetKiller() const;
+  const IBaseObject * const GetOwner() const;
 
 protected:
   void SetTexture(std::vector<std::string> & Texture);
@@ -44,5 +45,6 @@ private:
   mutable bool m_IsDead;
 
   mutable const IBaseObject * m_Killer;
+  const IBaseObject * const m_Owner;
 };
 

@@ -2,7 +2,7 @@
 #include "../Game.h"
 #include <assert.h>
 
-IBaseObject::IBaseObject(EUpdateSpeed UpdateSpeed, bool IsMoveable) :
+IBaseObject::IBaseObject(const IBaseObject * Owner, EUpdateSpeed UpdateSpeed, bool IsMoveable) :
   IUpdateable(UpdateSpeed),
   m_Bounds(),
   m_Texture(),
@@ -11,7 +11,8 @@ IBaseObject::IBaseObject(EUpdateSpeed UpdateSpeed, bool IsMoveable) :
   m_IsOnScreen(true),//hack!should be default false and then logic in setPosition
   m_IsMoveable(IsMoveable),
   m_IsDead(false),
-  m_Killer(nullptr)
+  m_Killer(nullptr),
+  m_Owner(Owner)
 {
   // Empty
 }
@@ -114,10 +115,13 @@ bool IBaseObject::IsDead() const
   return m_IsDead;
 }
 
-void IBaseObject::Kill(const IBaseObject * killer) const
+void IBaseObject::TryKill(const IBaseObject * killer) const
 {
   if (m_IsMortal)
   {
+    if (killer && (this == killer->m_Owner || this->m_Owner == killer))
+      return;
+
     m_IsDead = true;
     m_Killer = killer;
   }
@@ -128,3 +132,7 @@ const IBaseObject * IBaseObject::GetKiller() const
   return m_Killer;
 }
 
+const IBaseObject * const IBaseObject::GetOwner() const
+{
+  return m_Owner;
+}

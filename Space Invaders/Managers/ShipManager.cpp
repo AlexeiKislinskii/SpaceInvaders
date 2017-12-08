@@ -78,12 +78,8 @@ void CShipManager::Update(double time)
         auto killer = obj->GetKiller();
         if (killer == m_PlayerShip)
           PlayerProfile.AddScore(15);//killed by ram, "Yippee-kai-yay, motherfucker!"
-        else
-        {
-          auto Laser = dynamic_cast<const CLaser *>(killer);//here should be base weapon, not laser
-          if (Laser && Laser->GetOwner() == m_PlayerShip)
-            PlayerProfile.AddScore(15);//we should take value from player profile
-        }
+        else if(killer->GetOwner() == m_PlayerShip)
+          PlayerProfile.AddScore(15);//killed by bullet, we should take value from player profile
       }
       else
         PlayerProfile.ReduceLife();

@@ -1,7 +1,7 @@
 #include "Rock.h"
 
 CRock::CRock(CVector2i StartPosition, bool Upend) :
-  IBaseObject(NON_UPDATE, false),
+  IBaseObject(nullptr, NON_UPDATE, false),
   m_IsUpended(Upend)
 {
   SetPosition(StartPosition);
