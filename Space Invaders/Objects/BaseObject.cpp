@@ -1,6 +1,5 @@
 ﻿#include "BaseObject.h"
 #include "../Game.h"
-#include <assert.h>
 
 IBaseObject::IBaseObject(const IBaseObject * Owner, EUpdateSpeed UpdateSpeed, bool IsMoveable) :
   IUpdateable(UpdateSpeed),
@@ -27,7 +26,7 @@ const std::vector<std::string> & IBaseObject::GetTexture() const
   return m_Texture;
 }
 
-CRect IBaseObject::GetBounds() const
+const CRect & IBaseObject::GetBounds() const
 {
   return m_Bounds;
 }
@@ -71,7 +70,7 @@ void IBaseObject::CalculateEdges()
     size_t CurrentWidth = m_Texture[i].size();
 
     if (i != 0 && CurrentWidth != m_Texture[i - 1].size())
-      assert(CurrentWidth == m_Texture[i - 1].size());
+      ASSERT(CurrentWidth == m_Texture[i - 1].size(), "Not all rows in texture same size!");
 
     MaxTextureWidht = MaxTextureWidht > CurrentWidth ? MaxTextureWidht : CurrentWidth;
 

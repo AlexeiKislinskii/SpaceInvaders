@@ -13,6 +13,7 @@ CMapManager::~CMapManager()
 void CMapManager::Init()
 {
   m_CurrentMap = new CBaseMap();//only for test! we should create real map, base map is a prototype
+  ASSERT(m_CurrentMap, "Map creating failed!");
 
   m_CurrentMap->Generate();
 }

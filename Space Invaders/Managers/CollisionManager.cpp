@@ -34,7 +34,7 @@ void CCollisionEngine::Update(double time)
 
 bool CCollisionEngine::CanBePlaced(IBaseObject * object)//awful name
 {
-  CRect Bounds = object->GetBounds();
+  auto Bounds = object->GetBounds();
   auto & Objects = MapManager.GetCurrentMap().GetAllObjects();
 
   CollisionMap Map(Bounds.pos.y, Renderer.GetScreenRect().height, Bounds.width);

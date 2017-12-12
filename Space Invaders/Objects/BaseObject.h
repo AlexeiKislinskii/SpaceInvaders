@@ -4,6 +4,7 @@
 #include "../Structs/Rectangular.h"
 #include "../Structs/Vector.h"
 #include "../Interfaces/Updateable.h"
+#include "../Structs/Assert.h"
 
 class IBaseObject : 
   public IUpdateable
@@ -15,7 +16,7 @@ public:
   const std::vector<std::string> & GetTexture() const;
   
   const std::vector<CVector2i> & GetEdges() const;
-  CRect GetBounds() const;
+  const CRect & GetBounds() const;
   bool IsMortal() const;
   bool IsMoveable() const;
 

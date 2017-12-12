@@ -1,3 +1,3 @@
 #pragma once
 
-static const double MINIMAL_OBJECT_UPDATE_INTERVALE = 0.01;//in sec
+static const double MINIMAL_OBJECT_UPDATE_INTERVALE = 0.01;

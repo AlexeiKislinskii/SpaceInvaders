@@ -46,10 +46,8 @@ void CShipManager::Update(double time)
 
     auto playerShip = dynamic_cast<CPlayerShip *>(obj);
 
-    if (dynamic_cast<CPlayerShip *>(obj))
-    {
+    if (playerShip)
       m_PlayerShip = playerShip;
-    }
   }
 
   if (!m_PlayerShip)
@@ -67,9 +65,7 @@ void CShipManager::Update(double time)
     auto enemyShip = dynamic_cast<CEnemyShip *>(obj);
 
     if (enemyShip)
-    {
       EnemysShipCount++;
-    }
 
     if (obj->IsDead())
     {
@@ -86,10 +82,8 @@ void CShipManager::Update(double time)
     }
   }
 
-  for (size_t i = 0; i < 2 - EnemysShipCount; i++)
-  {
+  for (auto i = 0; i < 2 - EnemysShipCount; i++)
     TrySpawnEnemyShip();
-  }
 }
 
 void CShipManager::TrySpawnPlayerShip()

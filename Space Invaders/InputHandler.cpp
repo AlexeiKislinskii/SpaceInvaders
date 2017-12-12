@@ -9,16 +9,16 @@ CInputHandler::CInputHandler() :
   DWORD mode;
 
   //prevent selecting with mouse
-  GetConsoleMode(m_Handle, &mode);
+  ASSERT(GetConsoleMode(m_Handle, &mode), "GetConsoleMode failed!");
   mode &= ~ENABLE_QUICK_EDIT_MODE;
-  SetConsoleMode(m_Handle, mode);
+  ASSERT(SetConsoleMode(m_Handle, mode), "SetConsoleMode failed!");
 
   //prevent from resizing
   HWND hwnd = GetConsoleWindow();
   LONG dwStyle = GetWindowLong(hwnd, GWL_STYLE);
   dwStyle ^= WS_THICKFRAME;//disable resize by mouse near edges
   dwStyle ^= WS_MAXIMIZEBOX;//disable maximize button in right top corner
-  SetWindowLong(hwnd, GWL_STYLE, dwStyle);
+  ASSERT(SetWindowLong(hwnd, GWL_STYLE, dwStyle), "SetWindowLong failed!");
 }
 
 void CInputHandler::Update()

@@ -12,12 +12,11 @@ struct CVector2i
   void operator=(const CVector2i & Value);
 
   //Arithmetic overload
-  const CVector2i operator+(const CVector2i & Value);
-  const CVector2i operator-(const CVector2i & Value);
+  const CVector2i operator+(const CVector2i & Value) const;
+  const CVector2i operator-(const CVector2i & Value) const;
   void operator+=(const CVector2i & Value);
-  const CVector2i operator/=(const int Value) const;
 
   //Logical overload
-  bool operator==(const CVector2i & Value);
-  bool operator!=(const CVector2i & Value);
+  bool operator==(const CVector2i & Value) const;
+  bool operator!=(const CVector2i & Value) const;
 };

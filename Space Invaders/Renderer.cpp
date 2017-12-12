@@ -58,7 +58,7 @@ void CRenderer::Update(double time)
 
 void CRenderer::Add(IBaseObject & Object)
 {
-  const CRect & Bounds = Object.GetBounds();
+  auto Bounds = Object.GetBounds();
 
   size_t EndOfscreenPos = m_CameraYPosition + m_ScreenWidth;
 

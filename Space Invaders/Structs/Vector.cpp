@@ -30,27 +30,22 @@ void CVector2i::operator+=(const CVector2i & Value)
   y += Value.y;
 }
 
-const CVector2i CVector2i::operator+(const CVector2i & Value)
+const CVector2i CVector2i::operator+(const CVector2i & Value) const
 {
   return CVector2i(x + Value.x, y + Value.y);
 }
 
-const CVector2i CVector2i::operator-(const CVector2i & Value)
+const CVector2i CVector2i::operator-(const CVector2i & Value) const
 {
   return CVector2i(x - Value.x, y - Value.y);
 }
 
-const CVector2i CVector2i::operator/=(const int Value) const
-{
-  return CVector2i(x / Value, y / Value);
-}
-
-bool CVector2i::operator==(const CVector2i & Value)
+bool CVector2i::operator==(const CVector2i & Value) const
 {
   return x == Value.x && y == Value.y;
 }
 
-bool CVector2i::operator!=(const CVector2i & Value)
+bool CVector2i::operator!=(const CVector2i & Value) const
 {
   return x != Value.x || y != Value.y;
 }

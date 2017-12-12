@@ -27,11 +27,17 @@ CGame::~CGame()
 void CGame::Init()
 {
   m_MapManager = new CMapManager();
+  ASSERT(m_MapManager, "Map manager fail!");
   m_ShipManager = new CShipManager();
+  ASSERT(m_ShipManager, "Ship manager fail!");
   m_Render = new CRenderer();
+  ASSERT(m_Render, "Render fail!");
   m_CollisionEngine = new CCollisionEngine();
+  ASSERT(m_CollisionEngine, "Collision manager fail!");
   m_PlayerProfile = new CPlayerProfiler();
+  ASSERT(m_PlayerProfile, "Player profile fail!");
   m_MainMenu = new CGameMenu();
+  ASSERT(m_MainMenu, "Main menu fail!");
 
   CInputHandler::GetInstance().FocusSignal.Connect(this, &CGame::ConsoleFocusHandler);
 

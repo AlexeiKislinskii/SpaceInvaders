@@ -11,7 +11,8 @@ IBaseShip::IBaseShip(EMoveDirection direction) :
 
 IBaseShip::~IBaseShip()
 {
-  if(m_Weapon) delete m_Weapon;
+  ASSERT(m_Weapon, "Ship didn't create own weapon!");
+  delete m_Weapon;
 }
 
 void IBaseShip::Update(double time)
