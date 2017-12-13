@@ -42,6 +42,8 @@ private:
   void ContinueGame();
   void ExitGame();
 
+  double m_CurrentUpdateTime;
+
   CGameMenu * m_MainMenu;
 
   CMapManager * m_MapManager;

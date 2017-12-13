@@ -7,17 +7,19 @@
 class CBaseMap
 {
 public:
+  CBaseMap();
   ~CBaseMap();
 
   void Generate();
 
   void Update(double time);
+  void Pause(double time);
 
   void AddObject(IBaseObject * object);
 
   const std::list<IBaseObject *> & GetAllObjects() const;
 
-  const size_t & GetWidth() const { return m_Width; };
+  const size_t & GetWidth() const;
 
 private:
   size_t m_Width;

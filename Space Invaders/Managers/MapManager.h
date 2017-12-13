@@ -9,7 +9,8 @@ public:
 
   void Init();
   void Reset();
-
+  
+  void Pause(double time);
   void Update(double time);
 
   CBaseMap & GetCurrentMap() const { return *m_CurrentMap; };

@@ -4,6 +4,7 @@
 CGame * ISingletone<CGame>::p_instance = nullptr;
 
 CGame::CGame() :
+  m_CurrentUpdateTime(0),
   m_MapManager(nullptr),
   m_ShipManager(nullptr),
   m_Render(nullptr),
@@ -46,12 +47,14 @@ void CGame::Init()
 
 EGameState CGame::Update(double time)
 {
+  m_CurrentUpdateTime = time;
+
   if (m_GameState == PLAYING)
   {
-    m_CollisionEngine->TryUpdate(time);
-    m_ShipManager->TryUpdate(time);
-    m_MapManager->Update(time);
-    m_Render->TryUpdate(time);
+    m_CollisionEngine->TryUpdate(m_CurrentUpdateTime);
+    m_ShipManager->TryUpdate(m_CurrentUpdateTime);
+    m_MapManager->Update(m_CurrentUpdateTime);
+    m_Render->TryUpdate(m_CurrentUpdateTime);
 
     if (m_PlayerProfile->IsLifeEnded())
       PauseGame(PAUSED_FAIL);
@@ -72,8 +75,11 @@ void CGame::ConsoleFocusHandler(bool isFocused)
 
 void CGame::PauseGame(EGameState state)
 {
-  if(m_GameState == state)
+  if(m_GameState == state || state == PLAYING || state == EXIT)
     return;
+
+  if(state == PAUSED_BY_USER)
+    m_MapManager->Pause(m_CurrentUpdateTime);
 
   m_Render->Clear();
   m_GameState = state;

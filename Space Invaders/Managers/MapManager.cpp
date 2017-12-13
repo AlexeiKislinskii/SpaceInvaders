@@ -24,6 +24,11 @@ void CMapManager::Reset()
   Init();
 }
 
+void CMapManager::Pause(double time)
+{
+  m_CurrentMap->Pause(time);
+}
+
 void CMapManager::Update(double time)
 {
   m_CurrentMap->Update(time);
